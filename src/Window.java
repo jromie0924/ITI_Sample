@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -19,8 +21,12 @@ public class Window extends JFrame {
 	private JButton addCircleButton;
     private JButton addSquareButton;
     private JButton addTriangleButton;
+    private JButton clearCanvasButton;
+    private ArrayList<JPanel> panels;
     
     public Window() {
+    	
+    	panels = new ArrayList<JPanel>();
     	
     	// Button for adding a circle to the window
         addCircleButton = new JButton("Draw Circle");
@@ -34,14 +40,18 @@ public class Window extends JFrame {
         addTriangleButton = new JButton("Draw Triangle");
         addTriangleButton.setBounds(270, 10, 120, 50);
         
+        clearCanvasButton = new JButton("Clear Canvas");
+        clearCanvasButton.setBounds(400, 10, 120, 50);
+        
         setSize(new Dimension(1000, 600));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         add(addCircleButton);
         add(addSquareButton);
         add(addTriangleButton);
+        add(clearCanvasButton);
         setVisible(true);
-        initialize();
+        initialize(this);
     }
 
     private Color randomColor() {
@@ -52,7 +62,7 @@ public class Window extends JFrame {
     	return new Color(r, g, b);
     }
 
-    public void initialize() {
+    public void initialize(Window w) {
 
         addCircleButton.addActionListener(new ActionListener() {
 
@@ -66,6 +76,7 @@ public class Window extends JFrame {
                 repaint();
                 handleDrag(circle);
                 handleClick(circle);
+                panels.add(circle);
             }
         });
         
@@ -81,6 +92,7 @@ public class Window extends JFrame {
                 repaint();
                 handleDrag(square);
                 handleClick(square);
+                panels.add(square);
             }
         });
         
@@ -96,6 +108,19 @@ public class Window extends JFrame {
                 repaint();
                 handleDrag(triangle);
                 handleClick(triangle);
+                panels.add(triangle);
+        	}
+        });
+        
+        clearCanvasButton.addActionListener(new ActionListener() {
+        	
+        	@Override
+        	public void actionPerformed(ActionEvent arg0) {
+        		// TODO Auto-generated method stub
+        		for(JPanel panel : panels) {
+        			remove(panel);
+        		}
+        		repaint();
         	}
         });
 
@@ -170,7 +195,7 @@ public class Window extends JFrame {
             @Override
             public void run() {
                 // TODO Auto-generated method stub
-                new Window();
+            	new Window();
             }
         });
 
