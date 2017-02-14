@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +15,13 @@ import javax.swing.SwingUtilities;
 
 
 public class Window extends JFrame {
-
-    private JButton addCircleButton;
+	
+	private final int XDIM = 200;
+	private final int YDIM = 200;
+	private JButton addCircleButton;
     private JButton addSquareButton;
     private JButton addTriangleButton;
-    private List<JPanel> panels = new ArrayList<JPanel>();
+    //private List<JPanel> panels = new ArrayList<JPanel>();
     
     public Window() {
     	
@@ -53,12 +56,13 @@ public class Window extends JFrame {
             public void actionPerformed(ActionEvent arg0) {
                 // TODO Auto-generated method stub
                 JPanel circle = new Circle(Color.GREEN, Color.BLUE);
-                circle.setBounds(150,150,200,200);
+                circle.setBounds(150,150,XDIM,YDIM);
                 circle.setOpaque(false);
-                panels.add(circle);
+                //panels.add(circle);
                 add(circle);
                 repaint();
                 handleDrag(circle);
+                handleDoubleClick(circle);
             }
         });
         
@@ -68,17 +72,18 @@ public class Window extends JFrame {
             public void actionPerformed(ActionEvent arg0) {
                 // TODO Auto-generated method stub
                 Square square = new Square(Color.RED, Color.BLACK);
-                square.setBounds(150,150,200,200);
-                panels.add(square);
+                square.setBounds(150,150,XDIM,YDIM);
+                //panels.add(square);
                 add(square);
                 repaint();
                 handleDrag(square);
+                handleDoubleClick(square);
             }
         });
 
     }
 
-    public void handleDrag(JPanel panel){
+    public void handleDrag(JPanel panel) {
         final JPanel p = panel;
         panel.addMouseMotionListener(new MouseMotionAdapter() {
 
@@ -88,6 +93,42 @@ public class Window extends JFrame {
                 p.setLocation(me.getX(), me.getY());
             }
         });
+    }
+    
+    public void handleDoubleClick(JPanel panel) {
+    	panel.addMouseListener(new MouseAdapter() {
+    		
+    		@Override
+    		public void mouseClicked(MouseEvent me) {
+    			if(me.getClickCount() == 2) {
+    				int x = me.getComponent().getLocation().x;
+    				int y = me.getComponent().getLocation().y;
+    				me.translatePoint(x, y);
+    				String panelClass = panel.getClass().toString();
+    				switch (panelClass) {
+    					case "class Circle":
+    						JPanel circle = new Circle(Color.BLUE, Color.BLACK);
+    						circle.setBounds(x, y, XDIM, YDIM);
+    						remove(panel);
+    						add(circle);
+    						repaint();
+    						handleDrag(circle);
+    						handleDoubleClick(circle);
+    						break;
+    						
+    					case "class Square":
+    						JPanel square = new Square(Color.BLUE, Color.BLACK);
+    						square.setBounds(x, y, XDIM, YDIM);
+    						remove(panel);
+    						add(square);
+    						repaint();
+    						handleDrag(square);
+    						handleDoubleClick(square);
+    						break;
+    				}
+    			}
+    		}
+    	});
     }
 
     public static void main(String args[]) {
