@@ -67,9 +67,8 @@ public class Window extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 // TODO Auto-generated method stub
-                Square square = new Square();
+                Square square = new Square(Color.RED, Color.BLACK);
                 square.setBounds(150,150,200,200);
-                square.setBackground(Color.black);
                 panels.add(square);
                 add(square);
                 repaint();
