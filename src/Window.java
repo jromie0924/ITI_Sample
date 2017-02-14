@@ -22,7 +22,6 @@ public class Window extends JFrame {
 	private JButton addCircleButton;
     private JButton addSquareButton;
     private JButton addTriangleButton;
-    //private List<JPanel> panels = new ArrayList<JPanel>();
     
     public Window() {
     	
@@ -66,7 +65,6 @@ public class Window extends JFrame {
                 JPanel circle = new Circle(randomColor(), randomColor());
                 circle.setBounds(150,150,XDIM,YDIM);
                 circle.setOpaque(false);
-                //panels.add(circle);
                 add(circle);
                 repaint();
                 handleDrag(circle);
@@ -81,12 +79,27 @@ public class Window extends JFrame {
                 // TODO Auto-generated method stub
                 Square square = new Square(randomColor(), randomColor());
                 square.setBounds(150,150,XDIM,YDIM);
-                //panels.add(square);
+                square.setOpaque(false);
                 add(square);
                 repaint();
                 handleDrag(square);
                 handleClick(square);
             }
+        });
+        
+        addTriangleButton.addActionListener(new ActionListener() {
+        	
+        	@Override
+        	public void actionPerformed(ActionEvent arg0) {
+        		// TODO Auto-generated method stub
+                Triangle triangle = new Triangle(randomColor(), randomColor());
+                triangle.setBounds(150,150,XDIM,YDIM);
+                triangle.setOpaque(false);
+                add(triangle);
+                repaint();
+                handleDrag(triangle);
+                handleClick(triangle);
+        	}
         });
 
     }
