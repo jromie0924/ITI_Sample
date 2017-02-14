@@ -146,6 +146,16 @@ public class Window extends JFrame {
     						handleDrag(square);
     						handleClick(square);
     						break;
+    						
+    					case "class Triangle":
+    						JPanel triangle = new Triangle(randomColor(), randomColor());
+    						triangle.setBounds(x, y, XDIM, YDIM);
+    						remove(panel);
+    						add(triangle);
+    						repaint();
+    						handleDrag(triangle);
+    						handleClick(triangle);
+    						break;
     				}
     			} else if(me.getClickCount() == 2 && me.getButton() == MouseEvent.BUTTON1) {
     				remove(panel);
