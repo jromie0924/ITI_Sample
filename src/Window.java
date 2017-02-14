@@ -52,7 +52,7 @@ public class Window extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 // TODO Auto-generated method stub
-                JPanel circle = new Circle(Color.GREEN);
+                JPanel circle = new Circle(Color.GREEN, Color.BLUE);
                 circle.setBounds(150,150,200,200);
                 circle.setOpaque(false);
                 panels.add(circle);

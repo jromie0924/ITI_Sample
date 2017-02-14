@@ -8,18 +8,28 @@ import javax.swing.JPanel;
 public class Circle extends JPanel {
 	
 	private Color color;
+	private Color borderColor;
 	
 	// Default constructor
 	public Circle() {
 		color = Color.GRAY;
+		borderColor = Color.BLACK;
 	}
 	
+	// Constructor for just fill color
 	public Circle(Color c) {
 		color = c;
 	}
 	
+	// Constructor for fill and border colors
+	public Circle(Color c, Color b) {
+		color = c;
+		borderColor = b;
+	}
+	
 	private void draw(Graphics g) {
 		Graphics2D shape = (Graphics2D)g;
+		Graphics2D border = (Graphics2D)g;
 		
 		RenderingHints rh = new RenderingHints(
                 RenderingHints.KEY_ANTIALIASING,
@@ -29,9 +39,13 @@ public class Circle extends JPanel {
                RenderingHints.VALUE_RENDER_QUALITY);
         
         shape.setRenderingHints(rh);
+        border.setRenderingHints(rh);
 		
+        border.setPaint(borderColor);
+        shape.fillOval(g.getClipBounds().x,  g.getClipBounds().y,  g.getClipBounds().width,  g.getClipBounds().height);
+        
 		shape.setPaint(color);
-		shape.fillOval(g.getClipBounds().x,  g.getClipBounds().y,  g.getClipBounds().width,  g.getClipBounds().height);
+		shape.fillOval(g.getClipBounds().x + 2,  g.getClipBounds().y + 2,  g.getClipBounds().width - 4,  g.getClipBounds().height - 4);
 		
 	}
 	
