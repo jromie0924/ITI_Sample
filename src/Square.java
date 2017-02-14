@@ -42,7 +42,7 @@ public class Square extends JPanel {
         border.setRenderingHints(rh);
 		
         border.setPaint(borderColor);
-        shape.fillRect(g.getClipBounds().x,  g.getClipBounds().y,  g.getClipBounds().width,  g.getClipBounds().height);
+        border.fillRect(g.getClipBounds().x,  g.getClipBounds().y,  g.getClipBounds().width,  g.getClipBounds().height);
         
 		shape.setPaint(color);
 		shape.fillRect(g.getClipBounds().x + 3,  g.getClipBounds().y + 3,  g.getClipBounds().width - 6,  g.getClipBounds().height - 6);

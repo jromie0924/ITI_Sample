@@ -42,7 +42,7 @@ public class Circle extends JPanel {
         border.setRenderingHints(rh);
 		
         border.setPaint(borderColor);
-        shape.fillOval(g.getClipBounds().x,  g.getClipBounds().y,  g.getClipBounds().width,  g.getClipBounds().height);
+        border.fillOval(g.getClipBounds().x,  g.getClipBounds().y,  g.getClipBounds().width,  g.getClipBounds().height);
         
 		shape.setPaint(color);
 		shape.fillOval(g.getClipBounds().x + 3,  g.getClipBounds().y + 3,  g.getClipBounds().width - 6,  g.getClipBounds().height - 6);
