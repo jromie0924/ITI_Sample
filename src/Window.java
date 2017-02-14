@@ -4,10 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -48,9 +45,9 @@ public class Window extends JFrame {
     }
 
     private Color randomColor() {
-    	int r = ThreadLocalRandom.current().nextInt(0, 255+1);
-    	int g = ThreadLocalRandom.current().nextInt(0, 255+1);
-    	int b = ThreadLocalRandom.current().nextInt(0, 255+1);
+    	int r = ThreadLocalRandom.current().nextInt(0, 256);
+    	int g = ThreadLocalRandom.current().nextInt(0, 256);
+    	int b = ThreadLocalRandom.current().nextInt(0, 256);
     	
     	return new Color(r, g, b);
     }
@@ -103,20 +100,21 @@ public class Window extends JFrame {
         });
 
     }
-
-    public void handleDrag(JPanel panel) {
-        final JPanel p = panel;
+    
+    public void handleDrag(final JPanel panel) {
+        
         panel.addMouseMotionListener(new MouseMotionAdapter() {
-
+           
         	@Override
             public void mouseDragged(MouseEvent me) {
                 me.translatePoint(me.getComponent().getLocation().x, me.getComponent().getLocation().y);
-                p.setLocation(me.getX(), me.getY());
+                panel.setLocation(me.getX(), me.getY());
+                repaint();
             }
         });
     }
     
-    public void handleClick(JPanel panel) {
+    public void handleClick(final JPanel panel) {
     	panel.addMouseListener(new MouseAdapter() {
     		
     		@Override
