@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Window extends JFrame {
@@ -26,15 +27,15 @@ public class Window extends JFrame {
     public Window() {
     	
     	// Button for adding a circle to the window
-        addCircleButton = new JButton("Add Circle");
+        addCircleButton = new JButton("Draw Circle");
         addCircleButton.setBounds(10, 10, 120, 50);
         
         // Button for add a square to the window
-        addSquareButton = new JButton("Add Square");
+        addSquareButton = new JButton("Draw Square");
         addSquareButton.setBounds(140, 10, 120, 50);
         
         // Button for adding a triangle to the window
-        addTriangleButton = new JButton("Add Triangle");
+        addTriangleButton = new JButton("Draw Triangle");
         addTriangleButton.setBounds(270, 10, 120, 50);
         
         setSize(new Dimension(1000, 600));
@@ -47,6 +48,13 @@ public class Window extends JFrame {
         initialize();
     }
 
+    private Color randomColor() {
+    	int r = ThreadLocalRandom.current().nextInt(0, 255+1);
+    	int g = ThreadLocalRandom.current().nextInt(0, 255+1);
+    	int b = ThreadLocalRandom.current().nextInt(0, 255+1);
+    	
+    	return new Color(r, g, b);
+    }
 
     public void initialize() {
 
@@ -55,14 +63,14 @@ public class Window extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 // TODO Auto-generated method stub
-                JPanel circle = new Circle(Color.GREEN, Color.BLUE);
+                JPanel circle = new Circle(randomColor(), randomColor());
                 circle.setBounds(150,150,XDIM,YDIM);
                 circle.setOpaque(false);
                 //panels.add(circle);
                 add(circle);
                 repaint();
                 handleDrag(circle);
-                handleDoubleClick(circle);
+                handleClick(circle);
             }
         });
         
@@ -71,13 +79,13 @@ public class Window extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 // TODO Auto-generated method stub
-                Square square = new Square(Color.RED, Color.BLACK);
+                Square square = new Square(randomColor(), randomColor());
                 square.setBounds(150,150,XDIM,YDIM);
                 //panels.add(square);
                 add(square);
                 repaint();
                 handleDrag(square);
-                handleDoubleClick(square);
+                handleClick(square);
             }
         });
 
@@ -95,37 +103,40 @@ public class Window extends JFrame {
         });
     }
     
-    public void handleDoubleClick(JPanel panel) {
+    public void handleClick(JPanel panel) {
     	panel.addMouseListener(new MouseAdapter() {
     		
     		@Override
     		public void mouseClicked(MouseEvent me) {
-    			if(me.getClickCount() == 2) {
+    			if(me.getButton() == MouseEvent.BUTTON3) {
     				int x = me.getComponent().getLocation().x;
     				int y = me.getComponent().getLocation().y;
     				me.translatePoint(x, y);
     				String panelClass = panel.getClass().toString();
     				switch (panelClass) {
     					case "class Circle":
-    						JPanel circle = new Circle(Color.BLUE, Color.BLACK);
+    						JPanel circle = new Circle(randomColor(), randomColor());
     						circle.setBounds(x, y, XDIM, YDIM);
     						remove(panel);
     						add(circle);
     						repaint();
     						handleDrag(circle);
-    						handleDoubleClick(circle);
+    						handleClick(circle);
     						break;
     						
     					case "class Square":
-    						JPanel square = new Square(Color.BLUE, Color.BLACK);
+    						JPanel square = new Square(randomColor(), randomColor());
     						square.setBounds(x, y, XDIM, YDIM);
     						remove(panel);
     						add(square);
     						repaint();
     						handleDrag(square);
-    						handleDoubleClick(square);
+    						handleClick(square);
     						break;
     				}
+    			} else if(me.getClickCount() == 2 && me.getButton() == MouseEvent.BUTTON1) {
+    				remove(panel);
+    				repaint();
     			}
     		}
     	});
