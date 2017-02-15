@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -221,6 +220,7 @@ public class Window extends JFrame {
     						JPanel circle = new Circle(fillColor, borderColor);
     						circle.setBounds(x, y, XDIM, YDIM);
     						remove(panel);
+    						panels.add(circle);
     						add(circle);
     						repaint();
     						handleDrag(circle);
@@ -231,6 +231,7 @@ public class Window extends JFrame {
     						JPanel square = new Square(fillColor, borderColor);
     						square.setBounds(x, y, XDIM, YDIM);
     						remove(panel);
+    						panels.add(square);
     						add(square);
     						repaint();
     						handleDrag(square);
@@ -241,6 +242,7 @@ public class Window extends JFrame {
     						JPanel triangle = new Triangle(fillColor, borderColor);
     						triangle.setBounds(x, y, XDIM, YDIM);
     						remove(panel);
+    						panels.add(triangle);
     						add(triangle);
     						repaint();
     						handleDrag(triangle);
