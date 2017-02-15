@@ -1,5 +1,5 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +9,7 @@ import java.awt.event.MouseMotionAdapter;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
@@ -23,6 +24,7 @@ public class Window extends JFrame {
     private JButton addTriangleButton;
     private JButton clearCanvasButton;
     private ArrayList<JPanel> panels;
+    private final String[] COLORS = {"Red", "Orange", "Yellow", "Green", "Blue", "Pink", "Cyan", "Black", "Gray", "RANDOMIZE"};
     
     public Window() {
     	
@@ -53,6 +55,59 @@ public class Window extends JFrame {
         setVisible(true);
         initialize(this);
     }
+    
+    private Color selectColor(String message) {
+    	Color color;
+    	try {
+	    	int selection = JOptionPane.showOptionDialog(null, message, "Select color", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, COLORS, COLORS[0]);
+	    	String colorName = COLORS[selection];
+	    	switch (colorName) {
+	    		case "Red":
+	    			color = Color.RED;
+	    			break;
+	    			
+	    		case "Orange":
+	    			color = Color.ORANGE;
+	    			break;
+	    			
+	    		case "Yellow":
+	    			color = Color.YELLOW;
+	    			break;
+	    			
+	    		case "Green":
+	    			color = Color.GREEN;
+	    			break;
+	    			
+	    		case "Blue":
+	    			color = Color.BLUE;
+	    			break;
+	    			
+	    		case "Pink":
+	    			color = Color.PINK;
+	    			break;
+	    			
+	    		case "Cyan":
+	    			color = Color.CYAN;
+	    			break;
+	    			
+	    		case "Black":
+	    			color = Color.BLACK;
+	    			break;
+	    			
+	    		case "Gray":
+	    			color = Color.GRAY;
+	    			break;
+	    			
+	    		default:
+	    			color = randomColor();
+	    			break;
+	    	}
+    	} catch (ArrayIndexOutOfBoundsException e) {
+    		return Color.GRAY;
+    	}
+    	
+    	return color;
+    }
 
     private Color randomColor() {
     	int r = ThreadLocalRandom.current().nextInt(0, 256);
@@ -69,7 +124,9 @@ public class Window extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 // TODO Auto-generated method stub
-                JPanel circle = new Circle(randomColor(), randomColor());
+            	Color fillColor = selectColor("Please select fill color.");
+            	Color borderColor = selectColor("Please select border color.");
+                JPanel circle = new Circle(fillColor, borderColor);
                 circle.setBounds(150,150,XDIM,YDIM);
                 circle.setOpaque(false);
                 add(circle);
@@ -85,7 +142,9 @@ public class Window extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 // TODO Auto-generated method stub
-                Square square = new Square(randomColor(), randomColor());
+            	Color fillColor = selectColor("Please select fill color.");
+            	Color borderColor = selectColor("Please select border color.");
+                Square square = new Square(fillColor, borderColor);
                 square.setBounds(150,150,XDIM,YDIM);
                 square.setOpaque(false);
                 add(square);
@@ -101,7 +160,9 @@ public class Window extends JFrame {
         	@Override
         	public void actionPerformed(ActionEvent arg0) {
         		// TODO Auto-generated method stub
-                Triangle triangle = new Triangle(randomColor(), randomColor());
+        		Color fillColor = selectColor("Please select fill color.");
+            	Color borderColor = selectColor("Please select border color.");
+                Triangle triangle = new Triangle(fillColor, borderColor);
                 triangle.setBounds(150,150,XDIM,YDIM);
                 triangle.setOpaque(false);
                 add(triangle);
@@ -149,9 +210,12 @@ public class Window extends JFrame {
     				int y = me.getComponent().getLocation().y;
     				me.translatePoint(x, y);
     				String panelClass = panel.getClass().toString();
+    				Color fillColor = selectColor("Please select fill color.");
+                	Color borderColor = selectColor("Please select border color.");
+				
     				switch (panelClass) {
     					case "class Circle":
-    						JPanel circle = new Circle(randomColor(), randomColor());
+    						JPanel circle = new Circle(fillColor, borderColor);
     						circle.setBounds(x, y, XDIM, YDIM);
     						remove(panel);
     						add(circle);
@@ -161,7 +225,7 @@ public class Window extends JFrame {
     						break;
     						
     					case "class Square":
-    						JPanel square = new Square(randomColor(), randomColor());
+    						JPanel square = new Square(fillColor, borderColor);
     						square.setBounds(x, y, XDIM, YDIM);
     						remove(panel);
     						add(square);
@@ -171,7 +235,7 @@ public class Window extends JFrame {
     						break;
     						
     					case "class Triangle":
-    						JPanel triangle = new Triangle(randomColor(), randomColor());
+    						JPanel triangle = new Triangle(fillColor, borderColor);
     						triangle.setBounds(x, y, XDIM, YDIM);
     						remove(panel);
     						add(triangle);
