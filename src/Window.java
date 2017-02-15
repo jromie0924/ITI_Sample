@@ -103,6 +103,9 @@ public class Window extends JFrame {
 	    			break;
 	    	}
     	} catch (ArrayIndexOutOfBoundsException e) {
+    		
+    		// This scenario occurs when the user clicks our of the JOptionPane.
+    		// To prevent runtime errors, the function will return gray as default.
     		return Color.GRAY;
     	}
     	
