@@ -189,6 +189,7 @@ public class Window extends JFrame {
 
     }
     
+    // From http://stackoverflow.com/questions/12694790/dragging-jpanels-inside-jframe
     public void handleDrag(final JPanel panel) {
         
         panel.addMouseMotionListener(new MouseMotionAdapter() {

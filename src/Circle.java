@@ -31,6 +31,8 @@ public class Circle extends JPanel {
 		Graphics2D shape = (Graphics2D)g;
 		Graphics2D border = (Graphics2D)g;
 		
+		// Got this from
+		// http://zetcode.com/gfx/java2d/shapesandfills/
 		RenderingHints rh = new RenderingHints(
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
